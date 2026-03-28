@@ -8,7 +8,9 @@ Status: [ ] = open, [x] = klaar.
 
 - [x] Mapstructuur: `Hetzner_box1/infra/` als eigen repository
 - [x] Verplaatst vanuit `gasprice/` naar eigen repo (2026-03-28)
-- [x] GitHub repository aanmaken: `rickgreen/hetzner-infra`
+- [x] GitHub repository aangemaakt: https://github.com/rickgreen/hetzner-infra
+- [x] `.gitignore` sluit state files en `*.tfvars` uit
+- [x] 25 bestanden in initiële commit
 
 ## Terraform ✓
 
@@ -30,18 +32,21 @@ Status: [ ] = open, [x] = klaar.
 
 ## Actieve projecten op de VPS
 
-| Project | Subdomain | Webroot | Vars-file |
-|---|---|---|---|
-| Gasprice | gasprice.rickgreen.nl | /var/www/gasprice | ansible/vars/gasprice.yml |
+| Project | Subdomain | Webroot | Vars-file | Repository |
+|---|---|---|---|---|
+| Gasprice | gasprice.rickgreen.nl | /var/www/gasprice | ansible/vars/gasprice.yml | rickgreen/gasprice |
 
 ---
 
 ## Nieuw project toevoegen (checklist)
 
 - [ ] A-record aanmaken bij Vimexx: `<naam>.rickgreen.nl` → `204.168.178.129`
-- [ ] `ansible/vars/<naam>.yml` aanmaken
-- [ ] Nginx vhost aanmaken: `ansible-playbook ... -e @vars/<naam>.yml --tags nginx`
-- [ ] Wachten op DNS propagatie
-- [ ] SSL aanvragen: `ansible-playbook ... -e @vars/<naam>.yml --tags ssl`
+- [ ] `ansible/vars/<naam>.yml` aanmaken op basis van `vars/gasprice.yml`
+- [ ] Nginx vhost aanmaken:
+      `ansible-playbook -i ansible/inventory.yml ansible/site.yml -e @ansible/vars/<naam>.yml --tags nginx`
+- [ ] Wachten op DNS propagatie: `dig <naam>.rickgreen.nl +short`
+- [ ] SSL aanvragen:
+      `ansible-playbook -i ansible/inventory.yml ansible/site.yml -e @ansible/vars/<naam>.yml --tags ssl`
 - [ ] Verifiëren: HTTPS bereikbaar, HSTS header aanwezig, HTTP redirect werkt
 - [ ] Tabel 'Actieve projecten' hierboven bijwerken
+- [ ] `Hetzner_box1.md` in Obsidian bijwerken
