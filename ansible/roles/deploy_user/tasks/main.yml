@@ -8,12 +8,14 @@
     shell: /bin/bash
     create_home: true
     state: present
+  tags: nginx
 
 - name: Add SSH authorized key for deploy user
   ansible.posix.authorized_key:
     user: "{{ deploy_user }}"
     key: "{{ lookup('file', deploy_ssh_public_key_path) }}"
     state: present
+  tags: nginx
 
 - name: Create webroot directory
   ansible.builtin.file:
@@ -22,3 +24,4 @@
     owner: "{{ deploy_user }}"
     group: "{{ deploy_user }}"
     mode: "0755"
+  tags: nginx
