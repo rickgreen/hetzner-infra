@@ -1,6 +1,7 @@
 ---
 # Project-specific variables for the gasprice deployment.
 
+project_name: gasprice
 domain: gasprice.rickgreen.nl
 webroot: /var/www/gasprice
 deploy_user: deploy

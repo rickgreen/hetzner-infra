@@ -1,0 +1,14 @@
+---
+# Project-specific variables for the energieprijzen deployment.
+
+project_name: energieprijzen
+domain: energieprijzen.rickgreen.nl
+webroot: /var/www/energieprijzen
+deploy_user: deploy
+
+# SSH public key installed for the deploy user.
+# Same key as used by other projects on this VPS.
+deploy_ssh_public_key_path: ~/.ssh/gasprice_deploy.pub
+
+# Email address for Let's Encrypt certificate registration.
+certbot_email: "energieprijzen@rickgreen.nl"

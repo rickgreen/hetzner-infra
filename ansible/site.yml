@@ -1,20 +1,19 @@
 ---
 # Main playbook — runs all roles to fully configure the VPS.
 #
-# Usage:
-#   ansible-playbook -i inventory.yml site.yml
+# Usage (always pass a vars file):
+#   ansible-playbook -i inventory.yml site.yml -e @vars/gasprice.yml
+#   ansible-playbook -i inventory.yml site.yml -e @vars/energieprijzen.yml
 #
 # Selective runs:
-#   ansible-playbook -i inventory.yml site.yml --tags firewall
-#   ansible-playbook -i inventory.yml site.yml --tags fail2ban
-#   ansible-playbook -i inventory.yml site.yml --tags ssl
+#   ansible-playbook -i inventory.yml site.yml -e @vars/<project>.yml --tags nginx
+#   ansible-playbook -i inventory.yml site.yml -e @vars/<project>.yml --tags ssl
+#   ansible-playbook -i inventory.yml site.yml -e @vars/<project>.yml --tags firewall
+#   ansible-playbook -i inventory.yml site.yml -e @vars/<project>.yml --tags fail2ban
 
-- name: Configure gasprice VPS
+- name: Configure VPS
   hosts: gasprice
   become: true
-
-  vars_files:
-    - vars/gasprice.yml
 
   roles:
     # Base security first

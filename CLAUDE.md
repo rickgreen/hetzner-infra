@@ -24,6 +24,7 @@ heeft zijn eigen repository voor de applicatiecode en CI/CD pipeline.
 | Applicatie | Repository | Subdomain | Webroot |
 |---|---|---|---|
 | Gasprice | rickgreen/gasprice | gasprice.rickgreen.nl | /var/www/gasprice |
+| Energieprijzen | rickgreen/energieprijzen | energieprijzen.rickgreen.nl | /var/www/energieprijzen |
 
 Nieuwe applicaties toevoegen:
 1. `ansible/vars/<projectnaam>.yml` aanmaken met domain, webroot, certbot_email

@@ -3,7 +3,7 @@
 # HTTPS Nginx vhost, and ensures automatic renewal via systemd timer.
 #
 # Tagged 'ssl' so it can be run separately after DNS propagation:
-#   ansible-playbook -i inventory.yml site.yml --tags ssl
+#   ansible-playbook -i inventory.yml site.yml -e @vars/<project>.yml --tags ssl
 
 - name: Install Certbot and Nginx plugin
   ansible.builtin.apt:
@@ -34,10 +34,10 @@
   notify: Reload Nginx
   tags: ssl
 
-- name: Deploy HTTPS Nginx vhost with HSTS
+- name: "Deploy HTTPS Nginx vhost for {{ project_name }}"
   ansible.builtin.template:
-    src: "{{ role_path }}/../nginx/templates/gasprice.nginx.ssl.conf.j2"
-    dest: /etc/nginx/sites-available/gasprice.conf
+    src: "{{ role_path }}/../nginx/templates/vhost.ssl.conf.j2"
+    dest: "/etc/nginx/sites-available/{{ project_name }}.conf"
     owner: root
     group: root
     mode: "0644"

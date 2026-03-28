@@ -1,6 +1,9 @@
 ---
-# Installs Nginx and deploys the gasprice vhost configuration.
+# Installs Nginx and deploys a project vhost configuration.
 # The initial vhost serves HTTP only; the certbot role adds HTTPS later.
+#
+# Tagged 'nginx' so it can be run separately:
+#   ansible-playbook -i inventory.yml site.yml -e @vars/<project>.yml --tags nginx
 
 - name: Install Nginx
   ansible.builtin.apt:
@@ -8,35 +11,41 @@
     state: present
     update_cache: true
     cache_valid_time: 3600
+  tags: nginx
 
 - name: Remove default Nginx site
   ansible.builtin.file:
     path: /etc/nginx/sites-enabled/default
     state: absent
   notify: Reload Nginx
+  tags: nginx
 
-- name: Deploy gasprice Nginx vhost
+- name: "Deploy {{ project_name }} Nginx vhost"
   ansible.builtin.template:
-    src: gasprice.nginx.conf.j2
-    dest: /etc/nginx/sites-available/gasprice.conf
+    src: vhost.conf.j2
+    dest: "/etc/nginx/sites-available/{{ project_name }}.conf"
     owner: root
     group: root
     mode: "0644"
   notify: Reload Nginx
+  tags: nginx
 
-- name: Enable gasprice vhost
+- name: "Enable {{ project_name }} vhost"
   ansible.builtin.file:
-    src: /etc/nginx/sites-available/gasprice.conf
-    dest: /etc/nginx/sites-enabled/gasprice.conf
+    src: "/etc/nginx/sites-available/{{ project_name }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ project_name }}.conf"
     state: link
   notify: Reload Nginx
+  tags: nginx
 
 - name: Validate Nginx configuration
   ansible.builtin.command: nginx -t
   changed_when: false
+  tags: nginx
 
 - name: Ensure Nginx is started and enabled
   ansible.builtin.service:
     name: nginx
     state: started
     enabled: true
+  tags: nginx

@@ -35,6 +35,7 @@ Status: [ ] = open, [x] = klaar.
 | Project | Subdomain | Webroot | Vars-file | Repository |
 |---|---|---|---|---|
 | Gasprice | gasprice.rickgreen.nl | /var/www/gasprice | ansible/vars/gasprice.yml | rickgreen/gasprice |
+| Energieprijzen | energieprijzen.rickgreen.nl | /var/www/energieprijzen | ansible/vars/energieprijzen.yml | rickgreen/energieprijzen |
 
 ---
 
